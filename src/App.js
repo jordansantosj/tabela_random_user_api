@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import api from './Api';
+import { Table } from 'reactstrap'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+    state = {
+        usuario: [],
+    }
+    async componentDidMount() {
+        const response = await api.get()
+        this.setState({ usuario: response.data.results })
+    }
+    render() {
+
+        const { usuario } = this.state;
+        return (
+            <div>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Data de nascimento</th>
+                            <th>Genero</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {console.log(usuario)}
+                        {usuario.map(info => (
+                            <tr key={info.id.value}>
+                                <th scope="row">1</th>
+                        <td>{info.name.first} { info.name.last}</td>
+                                <td>{info.dob.date}</td>
+                                <td>{info.gender}</td>
+                                <td>{info.email}</td>
+                                <td>{info.phone}</td>
+                                <td>{info.location.city}/{info.location.state}/{info.location.country}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+
+            </div>
+        )
+    }
 }
 
 export default App;
