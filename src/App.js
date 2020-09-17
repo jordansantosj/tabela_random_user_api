@@ -32,7 +32,7 @@ class App extends Component {
                         {console.log(usuario)}
                         {usuario.map(info => (
                             <tr key={info.id.value}>
-                                <th scope="row">1</th>
+                                <th scope="row">{}</th>
                         <td>{info.name.first} { info.name.last}</td>
                                 <td>{info.dob.date}</td>
                                 <td>{info.gender}</td>
